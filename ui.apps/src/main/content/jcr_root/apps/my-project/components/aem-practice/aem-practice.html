@@ -1,0 +1,28 @@
+<sly data-sly-use.model="com.task.core.models.AemPracticeModel"
+	 data-sly-use.template="core/wcm/components/commons/v1/templates.html"
+	 data-sly-set.isAuthor="${wcmmode.edit || wcmmode.design}"
+	 data-sly-set.isShowBackgroundImage="${!isAuthor && model.backgroundImage}"
+	 data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+	 data-sly-call="${clientlib.all @ categories=['aempractice']}"/>
+
+	<div class="cmp-aem-practice" data-sly-test="${model.hasContent}">
+		<h2 class="cmp-aem-practice__title">${model.title}</h2>
+		<div data-sly-test="${isShowBackgroundImage}">
+			<img class="cmp-aem-practice__image" src="${model.imagePath}" alt="Alt text"/>
+		</div>
+		<ul data-sly-list="${model.navigationItems}" class="navList" title="Navigation" >
+			<li>
+				<a href="${item.url @context='uri'}">
+					<b data-sly-test="${itemList.first}">${item.title}</b>
+					<sly data-sly-test="${!itemList.first && !itemList.last}">${item.title}</sly>
+					<i data-sly-test="${itemList.last}">${item.title}</i>
+				</a>
+			</li>
+		</ul>
+		<p data-sly-test="${isAuthor}" class="cmp-aem-practice__text">Author mode</p>
+		<p class="cmp-aem-practice__text">Page title: ${currentPage.title}</p>
+		<p class="cmp-aem-practice__text">Page path: ${currentPage.path}</p>
+	</div>
+	<sly data-sly-call="${template.placeholder @ isEmpty=!model.hasContent}"></sly>
+</sly>
+
